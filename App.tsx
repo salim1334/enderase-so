@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -21,10 +21,12 @@ import SupportPage from './pages/SupportPage';
 import CareersPage from './pages/CareersPage';
 import TenderPortalPage from './pages/TenderPortalPage';
 import TenderDetailPage from './pages/TenderDetailPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const App: React.FC = () => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <div className="flex flex-col min-h-screen">
                 <Header />
                 <main className="flex-grow pt-20">
@@ -46,12 +48,14 @@ const App: React.FC = () => {
                         <Route path="/careers" element={<CareersPage />} />
                         <Route path="/tender" element={<TenderPortalPage />} />
                         <Route path="/tender/:tenderId" element={<TenderDetailPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
                     </Routes>
                 </main>
                 <Footer />
                 <ScrollToTopButton />
             </div>
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 

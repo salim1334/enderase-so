@@ -111,9 +111,9 @@ const TenderPortalPage: React.FC = () => {
                         Get real-time commodity prices and unlock exclusive tender details to win more contracts.
                     </p>
                     <div className="mt-8">
-                        <a href="#register" className="bg-orange-500 text-white px-8 py-4 rounded-md text-lg font-bold hover:bg-orange-600 transition-transform hover:scale-105 transform inline-block">
+                        <Link to="/register" className="bg-orange-500 text-white px-8 py-4 rounded-md text-lg font-bold hover:bg-orange-600 transition-transform hover:scale-105 transform inline-block">
                             Create a Free Account
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full z-10">
