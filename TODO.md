@@ -1,0 +1,1 @@
+- [ ] Add Tailwind CSS classes to CreateBidPage.tsx for form styling

@@ -6,13 +6,15 @@ const router = express.Router();
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { username, email, password, role } = req.body;
-  console.log();
+  // Role is intentionally omitted from destructuring
+  const { username, email, password } = req.body;
 
   try {
     // Basic validation
     if (!username || !email || !password) {
-      return res.status(400).json({ message: 'Please provide username, email, and password' });
+      return res
+        .status(400)
+        .json({ message: 'Please provide username, email, and password' });
     }
 
     const userExists = await User.findOne({ where: { email } });
@@ -20,8 +22,17 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const user = await User.create({ username, email, password, role });
-    res.status(201).json({ message: 'User registered successfully', userId: user.id });
+    // Create user with default 'client' role
+    const user = await User.create({
+      username,
+      email,
+      password,
+      role: 'client', // Hardcode role to 'client'
+    });
+
+    res
+      .status(201)
+      .json({ message: 'User registered successfully', userId: user.id });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -33,7 +44,9 @@ router.post('/login', async (req, res) => {
 
   try {
     if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide email and password' });
+      return res
+        .status(400)
+        .json({ message: 'Please provide email and password' });
     }
 
     const user = await User.findOne({ where: { email } });
@@ -52,8 +65,15 @@ router.post('/login', async (req, res) => {
       { expiresIn: '1h' } // Token expires in 1 hour
     );
 
-    res.json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
-
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

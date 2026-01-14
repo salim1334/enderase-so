@@ -13,7 +13,6 @@ const bidRoutes = require('./routes/bids');
 const userRoutes = require('./routes/users');
 const profileRoutes = require('./routes/profile');
 
-
 // Import new models (MySQL)
 const { User, Bid } = require('./models');
 
@@ -23,6 +22,11 @@ const app = express();
 // Middleware
 app.use(cors()); // Allow requests from the frontend
 app.use(express.json()); // Parse JSON bodies
+
+// test route
+app.get('/', (req, res) => {
+  res.send('Enderase Solutions Backend is running');
+});
 
 // API Routes (Legacy)
 // TODO: These routes will be deprecated or migrated from MongoDB
@@ -35,12 +39,12 @@ app.use('/api/bids', bidRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
 
-
 // Sync database and start server
-sequelize.sync({ force: false }) // Use { force: true } to drop and re-create tables during development
+sequelize
+  .sync({ force: false }) // Use { force: true } to drop and re-create tables during development
   .then(() => {
     console.log('MySQL Database synchronized');
-    const port = process.env.PORT || 5000;
+    const port = process.env.PORT || 4000;
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });

@@ -5,7 +5,10 @@ const { User } = require('../models');
 const protect = async (req, res, next) => {
   let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
     try {
       // Get token from header
       token = req.headers.authorization.split(' ')[1];
@@ -19,9 +22,9 @@ const protect = async (req, res, next) => {
         attributes: { exclude: ['password'] },
       });
 
-      if (!req.user) {
-        return res.status(401).json({ message: 'Not authorized, user not found' });
-      }
+      // if (!req.user) {
+      //   return res.status(401).json({ message: 'Not authorized, user not found' });
+      // }
 
       next();
     } catch (error) {
@@ -49,7 +52,9 @@ const isStaff = (req, res, next) => {
   if (req.user && (req.user.role === 'staff' || req.user.role === 'admin')) {
     next();
   } else {
-    res.status(403).json({ message: 'Not authorized as a staff member or admin' });
+    res
+      .status(403)
+      .json({ message: 'Not authorized as a staff member or admin' });
   }
 };
 

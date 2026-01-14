@@ -23,6 +23,10 @@ import TenderPortalPage from './pages/TenderPortalPage';
 import TenderDetailPage from './pages/TenderDetailPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import AdminRegisterPage from './pages/AdminRegisterPage';
+import AdminRoute from './components/AdminRoute';
+import CreateBidPage from './pages/CreateBidPage';
+import StaffRoute from './components/StaffRoute';
 
 const App: React.FC = () => {
     return (
@@ -50,6 +54,9 @@ const App: React.FC = () => {
                         <Route path="/tender/:tenderId" element={<TenderDetailPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/admin/register" element={<AdminRoute><AdminRegisterPage /></AdminRoute>} />
+                        {/* <Route path="/create-bid" element={<StaffRoute><CreateBidPage /></StaffRoute>} /> */}
+                        <Route path="/create-bid" element={<CreateBidPage />} />
                     </Routes>
                 </main>
                 <Footer />

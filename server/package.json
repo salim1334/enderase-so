@@ -4,7 +4,7 @@
   "description": "Backend services for Enderase Solutions website.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "dev": "nodemon index.js"
   },
   "author": "",

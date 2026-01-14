@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import Search from './Search';
+import { useAuth } from '../context/AuthContext';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const { user, logout } = useAuth();
 
     const navLinks = [
         { name: 'Home', path: '/' },
@@ -14,6 +15,15 @@ const Header: React.FC = () => {
         { name: 'Licensing', path: '/licensing' },
         { name: 'Support', path: '/support' },
     ];
+
+    if (user) {
+        if (user.role === 'admin') {
+            navLinks.push({ name: 'Admin Register', path: '/admin/register' });
+        }
+        if (user.role === 'admin' || user.role === 'staff') {
+            navLinks.push({ name: 'Create Bid', path: '/create-bid' });
+        }
+    }
 
     const linkClasses = "text-white hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors";
     const activeLinkClasses = "text-orange-500 font-bold";
@@ -61,12 +71,19 @@ const Header: React.FC = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                     </svg>
                                 </button>
-                                <Link
-                                    to="/tender"
-                                    className="border border-orange-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-500 hover:text-black transition-colors"
-                                >
-                                    Login to Tender Portal
-                                </Link>
+                                {user ? (
+                                    <>
+                                        <span className="text-white">{user.email} ({user.role})</span>
+                                        <button onClick={logout} className="text-white hover:text-orange-500">Logout</button>
+                                    </>
+                                ) : (
+                                    <Link
+                                        to="/login"
+                                        className="border border-orange-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-500 hover:text-black transition-colors"
+                                    >
+                                        Login
+                                    </Link>
+                                )}
                                 <Link to="/contact" className="bg-orange-500 text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-600 transition-colors">
                                     Contact Us
                                 </Link>
@@ -123,11 +140,11 @@ const Header: React.FC = () => {
                             Search
                         </button>
                          <Link
-                             to="/tender"
+                             to="/login"
                              onClick={() => setIsMenuOpen(false)}
                              className="block w-full text-center border border-orange-500 text-white mt-2 px-3 py-2 rounded-md text-base font-medium hover:bg-orange-500 hover:text-black transition-colors"
                          >
-                            Login to Tender Portal
+                            Login
                          </Link>
                          <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="block w-full text-center bg-orange-500 text-black mt-2 px-3 py-2 rounded-md text-base font-medium hover:bg-orange-600 transition-colors">
                             Contact Us
