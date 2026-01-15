@@ -26,6 +26,8 @@ import RegisterPage from './pages/RegisterPage';
 import AdminRegisterPage from './pages/AdminRegisterPage';
 import AdminRoute from './components/AdminRoute';
 import CreateBidPage from './pages/CreateBidPage';
+import BidPortalPage from './pages/BidPortalPage';
+import BidDetailPage from './pages/BidDetailPage';
 import StaffRoute from './components/StaffRoute';
 
 const App: React.FC = () => {
@@ -52,6 +54,8 @@ const App: React.FC = () => {
                         <Route path="/careers" element={<CareersPage />} />
                         <Route path="/tender" element={<TenderPortalPage />} />
                         <Route path="/tender/:tenderId" element={<TenderDetailPage />} />
+                        <Route path="/bids" element={<BidPortalPage />} />
+                        <Route path="/bids/:bidId" element={<BidDetailPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route path="/admin/register" element={<AdminRoute><AdminRegisterPage /></AdminRoute>} />

@@ -23,6 +23,10 @@ const Bid = sequelize.define('Bid', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  region: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   bid_opening_date: {
     type: DataTypes.DATE,
     allowNull: false,

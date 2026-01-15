@@ -9,6 +9,10 @@ const LoginPage: React.FC = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
+    
+    // Get redirect URL from query params
+    const searchParams = new URLSearchParams(window.location.search);
+    const redirectUrl = searchParams.get('redirect') || '/';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,8 +37,8 @@ const LoginPage: React.FC = () => {
             // This assumes the API returns a token and a user object
             login(data.token, data.user);
             
-            // Redirect to the home page after login
-            navigate('/'); 
+            // Redirect to the intended page or home page after login
+            navigate(redirectUrl); 
 
         } catch (err: any) {
             setError(err.message);

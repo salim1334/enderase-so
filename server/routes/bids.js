@@ -25,6 +25,7 @@ router.post('/', protect, isStaff, async (req, res) => {
     bid_bond_amount,
     document_price,
     additional_notes,
+    region,
     bid_opening_date,
     bid_closing_date,
   } = req.body;
@@ -36,6 +37,7 @@ router.post('/', protect, isStaff, async (req, res) => {
       bid_bond_amount,
       document_price,
       additional_notes,
+      region,
       bid_opening_date,
       bid_closing_date,
       staffId: req.user.id, // Associate the bid with the logged-in staff member
@@ -57,6 +59,7 @@ router.put('/:id', protect, isStaff, async (req, res) => {
     bid_bond_amount,
     document_price,
     additional_notes,
+    region,
     bid_opening_date,
     bid_closing_date,
   } = req.body;

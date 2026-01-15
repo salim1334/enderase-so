@@ -9,6 +9,7 @@ const CreateBidPage: React.FC = () => {
     const [bidBondAmount, setBidBondAmount] = useState('');
     const [documentPrice, setDocumentPrice] = useState('');
     const [additionalNotes, setAdditionalNotes] = useState('');
+    const [region, setRegion] = useState('');
     const [bidOpeningDate, setBidOpeningDate] = useState('');
     const [bidClosingDate, setBidClosingDate] = useState('');
     const { token } = useAuth();
@@ -29,6 +30,7 @@ const CreateBidPage: React.FC = () => {
                 bid_bond_amount: bidBondAmount,
                 document_price: documentPrice,
                 additional_notes: additionalNotes,
+                region: region,
                 bid_opening_date: bidOpeningDate,
                 bid_closing_date: bidClosingDate,
               }),
@@ -42,6 +44,7 @@ const CreateBidPage: React.FC = () => {
                 setBidBondAmount('');
                 setDocumentPrice('');
                 setAdditionalNotes('');
+                setRegion('');
                 setBidOpeningDate('');
                 setBidClosingDate('');
             } else {
@@ -113,6 +116,18 @@ const CreateBidPage: React.FC = () => {
             <textarea
               value={additionalNotes}
               onChange={(e) => setAdditionalNotes(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Region
+            </label>
+            <input
+              type="text"
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              placeholder="e.g., Addis Ababa"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
