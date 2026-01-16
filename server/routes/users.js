@@ -7,6 +7,54 @@ const router = express.Router();
 // All routes in this file are protected and for admins only
 router.use(protect, isAdmin);
 
+// POST /api/users - Create a new user (admin/staff only)
+router.post('/', async (req, res) => {
+  const { username, email, password, role } = req.body;
+
+  try {
+    // Validation
+    if (!username || !email || !password || !role) {
+      return res.status(400).json({ 
+        message: 'Please provide username, email, password, and role' 
+      });
+    }
+
+    // Validate role
+    const validRoles = ['client', 'staff', 'admin'];
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({ 
+        message: 'Invalid role. Must be client, staff, or admin' 
+      });
+    }
+
+    // Check if user already exists
+    const userExists = await User.findOne({ where: { email } });
+    if (userExists) {
+      return res.status(400).json({ message: 'User with this email already exists' });
+    }
+
+    // Create new user with specified role
+    const user = await User.create({
+      username,
+      email,
+      password,
+      role, // Use the role provided by admin
+    });
+
+    res.status(201).json({ 
+      message: 'User registered successfully',
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // GET /api/users - Get all users
 router.get('/', async (req, res) => {
   try {

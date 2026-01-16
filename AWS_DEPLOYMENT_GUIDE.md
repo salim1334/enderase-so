@@ -19,9 +19,9 @@
 2. Configure security group (allow port 3306 from backend)
 3. Update `.env` in server:
    ```
-   DB_HOST=your-rds-endpoint.rds.amazonaws.com
+   DB_HOST=database-1.cbcu2uqawqtg.eu-north-1.rds.amazonaws.com
    DB_USER=admin
-   DB_PASSWORD=your-password
+   DB_PASSWORD=pfINZhZeEHp0VeRYgNGN
    DB_NAME=enderase_db
    ```
 
