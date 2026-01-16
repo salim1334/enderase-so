@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_ENDPOINTS } from '../config/api';
 
 const AdminRegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -16,9 +17,10 @@ const AdminRegisterPage: React.FC = () => {
     setLoading(true);
     setSuccessMessage('');
     setErrorMessage('');
-
+    setErrorMessage('');
+    
     try {
-      const response = await fetch('http://localhost:4000/api/users', {
+      const response = await fetch(API_ENDPOINTS.USERS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +50,7 @@ const AdminRegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="py-[50px] bg-gradient-to-br from-gray-50 to-orange-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-8">
           <div className="mb-8 text-center">

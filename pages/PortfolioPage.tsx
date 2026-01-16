@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../config/api';
 
 // Interface matching the backend schema
 interface ProjectDetail {
@@ -83,7 +83,7 @@ const PortfolioPage: React.FC = () => {
         const fetchProjects = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:5000/api/projects');
+                const response = await fetch(API_ENDPOINTS.PROJECTS);
                 if (!response.ok) {
                     throw new Error('Failed to fetch project portfolio. Make sure the server is running.');
                 }

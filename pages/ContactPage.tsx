@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { API_ENDPOINTS } from '../config/api';
 
 const ContactPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -49,7 +49,7 @@ const ContactPage: React.FC = () => {
         setStatus('Submitting your request...');
 
         try {
-            const response = await fetch('http://localhost:5000/api/audit-request', {
+            const response = await fetch(API_ENDPOINTS.AUDIT_REQUEST, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

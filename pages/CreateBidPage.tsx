@@ -1,7 +1,6 @@
-
-
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_ENDPOINTS } from '../config/api';
 
 const CreateBidPage: React.FC = () => {
     const [tenderName, setTenderName] = useState('');
@@ -18,7 +17,7 @@ const CreateBidPage: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:4000/api/bids', {
+            const response = await fetch(API_ENDPOINTS.BIDS, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_ENDPOINTS } from '../config/api';
 
 interface Bid {
   id: number;
@@ -40,7 +40,7 @@ const BidDetailPage: React.FC = () => {
 
   const fetchBidDetail = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/bids`, {
+      const response = await fetch(API_ENDPOINTS.BIDS, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
