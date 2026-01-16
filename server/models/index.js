@@ -11,6 +11,13 @@ User.hasMany(Bid, {
 Bid.belongsTo(User, {
   foreignKey: 'staffId',
   as: 'staff',
+  // ADD THIS LINE:
+  foreignKeyConstraint: true,
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+
+  foreignKeyConstraint: true,
+  constraints: true,
 });
 
 module.exports = { User, Bid };

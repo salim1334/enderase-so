@@ -431,7 +431,71 @@ Now that your images are in ECR, deploy them using **AWS App Runner** (easiest) 
 
 ### Option B: AWS ECS Fargate (More Control)
 
-I can provide detailed ECS steps if needed, but App Runner is simpler for beginners.
+If you need more control than App Runner, use ECS Fargate.
+
+#### Step 1: Create a Cluster
+1. Go to **AWS Console** → **Elastic Container Service (ECS)**.
+2. Click **Clusters** → **Create Cluster**.
+3. Name: `enderase-cluster`.
+4. Infrastructure: Select **AWS Fargate (serverless)**.
+5. Click **Create**.
+
+#### Step 2: Create Task Definitions (The Blueprint)
+You need one for Backend and one for Frontend.
+
+**For Backend:**
+1. Go to **Task Definitions** → **Create new Task Definition**.
+2. Family name: `enderase-backend-task`.
+3. **Infrastructure**: AWS Fargate.
+4. **Container 1**:
+   - Name: `backend-container`
+   - Image URI: YOUR_ECR_BACKEND_URI (e.g., `123456.dkr.ecr.../enderase-backend:latest`)
+   - Port mappings: `4000` (Protocol TCP)
+   - **Environment variables** (Add all from previous step: `DB_HOST`, `DB_USER`, etc.)
+5. Click **Create**.
+
+**For Frontend:**
+1. Create new Task Definition.
+2. Family name: `enderase-frontend-task`.
+3. **Infrastructure**: AWS Fargate.
+4. **Container 1**:
+   - Name: `frontend-container`
+   - Image URI: YOUR_ECR_FRONTEND_URI
+   - Port mappings: `80`
+   - **Environment variables**: N/A (Already baked in during build!)
+5. Click **Create**.
+
+#### Step 3: Run Services
+Now run these tasks in your cluster.
+
+**Run Backend Service:**
+1. Go to **Clusters** → `enderase-cluster`.
+2. Services tab → **Create**.
+3. Compute options: **Capacity provider strategy**.
+4. Family: `enderase-backend-task`.
+5. Service name: `backend-service`.
+6. Desired tasks: `1`.
+7. **Networking**:
+   - VPC: Select default.
+   - Subnets: Select all.
+   - **Security Group**: Create new.
+     - Type: Custom TCP, Port: `4000`, Source: `Anywhere`.
+   - **Public IP**: TURN ON.
+8. Click **Create**.
+9. Wait for it to deploy. Click the **Task ID** → **Networking** tab to find your **Public IP**.
+   - Your Backend URL is: `http://<Public-IP>:4000`
+
+**Run Frontend Service:**
+1. Creates service similar to Backend.
+2. Family: `enderase-frontend-task`.
+3. Service name: `frontend-service`.
+4. **Security Group**: Allow Port `80` from `Anywhere`.
+5. **Public IP**: TURN ON.
+6. Create and wait.
+7. Get **Public IP** from the running task.
+   - Access your app at: `http://<Public-IP>`
+
+> **Note**: Fargate IPs change if the task restarts. For a static URL, you need an **Application Load Balancer (ALB)**, which costs extra (~$16/mo). This is why App Runner is recommended—it includes a URL for free.
 
 ---
 

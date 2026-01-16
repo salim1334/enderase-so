@@ -40,10 +40,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
 
 // Sync database and start server
+// Replace your existing sync block with this:
 sequelize
-  .sync({ force: false }) // Use { force: true } to drop and re-create tables during development
+  .authenticate() 
   .then(() => {
-    console.log('MySQL Database synchronized');
+    console.log('Connection to MySQL RDS has been established successfully.');
     const port = process.env.PORT || 4000;
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
